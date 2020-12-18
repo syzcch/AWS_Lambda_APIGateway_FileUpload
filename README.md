@@ -70,6 +70,23 @@ You could test your lambda via this test event to check the logic of it. Before 
 ## API Gateway set up
 ```
 1. Choose your API gateway, click resources and create a new POST resource.
-2. 
+2. Click Integration Request and do following configuration
+   - Integration type: Lambda Function and keep Use Lambda Proxy Integration is invalid
+   - Mapping templates: Request body passthrough : When there are no templates defined (recommended) 
+   - Content-type : image/png and the template is 
+   {
+    "name": "test-pic.jpg",
+    "base64Image": "$input.body"
+   }
+3. For Method Excution, Content handling should be Convert to text(if needed)
+4. Deploy the new POST API
 ```
-A Python demo for uploading a file onto AWS S3 via APIGateway and Lambda
+## Test file upload
+Let's upload a file onto AWS S3 via API Gateway and Lambda
+```
+curl --request POST -H "Accept: image/png" -H "Content-Type: image/png" --data-binary "@test-pic.jpg" https://r98xoj55tf.execute-api.cn-northwest-1.amazonaws.com.cn/Prod/test-aldi-testaldi-1WBTDGPB5KY14
+```
+## Useful links
+https://aws.amazon.com/blogs/compute/binary-support-for-api-integrations-with-amazon-api-gateway/
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#util-template-reference
+https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
